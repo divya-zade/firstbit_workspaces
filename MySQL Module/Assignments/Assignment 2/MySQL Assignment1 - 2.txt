@@ -1,0 +1,452 @@
+                  MySQL Assignment - 2 
+
+
+Q1) Create the tables Member, Books, and Issue WITHOUT constraints.
+Ans: 1.create table member
+    -> (member_Id int , member_Name varchar(30), member_Address varchar(50),
+    -> Acc_open_Date date, membership_Type varchar(20),fees_paid decimal(10,2),max_Book_Allowed int , Penalty_Amount decimal(10,2) );
+
+    2.create table Book
+    -> (Book_No int , Book_Name varchar(30), Author_Name varchar(30),
+    -> Cost decimal(10,2) , Category varchar(15) );
+
+    3.create table Issue
+    -> (Lip_Issue_Id int , Book_No int , Member_Id int , Issue_Date date,
+    -> Return_Date date );  
+
+Q2) Display the structure of all three tables using DESC.
+Ans: 1. desc member;
++------------------+---------------+------+-----+---------+-------+
+| Field            | Type          | Null | Key | Default | Extra |
++------------------+---------------+------+-----+---------+-------+
+| member_Id        | int           | YES  |     | NULL    |       |
+| member_Name      | varchar(30)   | YES  |     | NULL    |       |
+| member_Address   | varchar(50)   | YES  |     | NULL    |       |
+| Acc_open_Date    | date          | YES  |     | NULL    |       |
+| membership_Type  | varchar(20)   | YES  |     | NULL    |       |
+| fees_paid        | decimal(10,2) | YES  |     | NULL    |       |
+| max_Book_Allowed | int           | YES  |     | NULL    |       |
+| Penalty_Amount   | decimal(10,2) | YES  |     | NULL    |       |
++------------------+---------------+------+-----+---------+-------+  
+2.desc book;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| Book_No     | int           | YES  |     | NULL    |       |
+| Book_Name   | varchar(30)   | YES  |     | NULL    |       |
+| Author_Name | varchar(30)   | YES  |     | NULL    |       |
+| Cost        | decimal(10,2) | YES  |     | NULL    |       |
+| Category    | varchar(15)   | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+  
+3.desc issue;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| Lip_Issue_Id | int  | YES  |     | NULL    |       |
+| Book_No      | int  | YES  |     | NULL    |       |
+| Member_Id    | int  | YES  |     | NULL    |       |
+| Issue_Date   | date | YES  |     | NULL    |       |
+| Return_Date  | date | YES  |     | NULL    |       |
++--------------+------+------+-----+---------+-------+    
+
+Q3) Drop the Member table.
+Ans: drop table Member;
+
+Q4) Create the Member table again with these constraints:
+Ans: CREATE TABLE Member
+    -> (
+    ->     Member_Id INT PRIMARY KEY,
+    ->     Member_Name VARCHAR(30),
+    ->     Membership_Type VARCHAR(20)
+    ->         CHECK (Membership_Type IN
+    ->         ('Lifetime','Annual','Half Yearly','Quarterly')),
+    ->     Max_Books_Allowed INT,
+    ->     Penalty_Amount DECIMAL(10,2)
+    -> );
+
+	desc member;
++-------------------+---------------+------+-----+---------+-------+
+| Field             | Type          | Null | Key | Default | Extra |
++-------------------+---------------+------+-----+---------+-------+
+| Member_Id         | int           | NO   | PRI | NULL    |       |
+| Member_Name       | varchar(30)   | YES  |     | NULL    |       |
+| Membership_Type   | varchar(20)   | YES  |     | NULL    |       |
+| Max_Books_Allowed | int           | YES  |     | NULL    |       |
+| Penalty_Amount    | decimal(10,2) | YES  |     | NULL    |       |
++-------------------+---------------+------+-----+---------+-------+     
+
+Q5) Alter Member table to increase Member_Name size from 30 to 40.
+Ans:  alter table member
+    -> modify column Member_Name VARCHAR(40);
+	 desc member;
++-------------------+---------------+------+-----+---------+-------+
+| Field             | Type          | Null | Key | Default | Extra |
++-------------------+---------------+------+-----+---------+-------+
+| Member_Id         | int           | NO   | PRI | NULL    |       |
+| Member_Name       | varchar(40)   | YES  |     | NULL    |       |
+| Membership_Type   | varchar(20)   | YES  |     | NULL    |       |
+| Max_Books_Allowed | int           | YES  |     | NULL    |       |
+| Penalty_Amount    | decimal(10,2) | YES  |     | NULL    |       |
++-------------------+---------------+------+-----+---------+-------+    
+
+Q6) Add a column Reference (VARCHAR (30)) to Issue table.
+Ans:alter table issue
+    -> add column Reference varchar(30);
+
+	 desc issue;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Lip_Issue_Id | int         | YES  |     | NULL    |       |
+| Book_No      | int         | YES  |     | NULL    |       |
+| Member_Id    | int         | YES  |     | NULL    |       |
+| Issue_Date   | date        | YES  |     | NULL    |       |
+| Return_Date  | date        | YES  |     | NULL    |       |
+| Reference    | varchar(30) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+     
+
+Q7) Drop the column Reference from Issue table.
+Ans:  alter table issue
+    -> drop column reference;
+
+	 desc issue;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| Lip_Issue_Id | int  | YES  |     | NULL    |       |
+| Book_No      | int  | YES  |     | NULL    |       |
+| Member_Id    | int  | YES  |     | NULL    |       |
+| Issue_Date   | date | YES  |     | NULL    |       |
+| Return_Date  | date | YES  |     | NULL    |       |
++--------------+------+------+-----+---------+-------+
+
+Q8) Rename the table Issue to Lib_Issue.
+Ans: rename table Issue to Lib_Issue;
+	desc lib_issue;
+
+Q9) Insert the following records into Member table:
+Ans: alter table member
+    -> add column Member_Address varchar(30) after member_name,
+    -> add column Acc_Open_Date date after Member_Address;
+     -> add column Fees_paid decimal(10,2) after membership_Type;
+desc member;
++-------------------+---------------+------+-----+---------+-------+
+| Field             | Type          | Null | Key | Default | Extra |
++-------------------+---------------+------+-----+---------+-------+
+| Member_Id         | int           | NO   | PRI | NULL    |       |
+| Member_Name       | varchar(40)   | YES  |     | NULL    |       |
+| Member_Address    | varchar(30)   | YES  |     | NULL    |       |
+| Acc_Open_Date     | date          | YES  |     | NULL    |       |
+| Membership_Type   | varchar(20)   | YES  |     | NULL    |       |
+| Fees_paid         | decimal(10,2) | YES  |     | NULL    |       |
+| Max_Books_Allowed | int           | YES  |     | NULL    |       |
+| Penalty_Amount    | decimal(10,2) | YES  |     | NULL    |       |
++-------------------+---------------+------+-----+---------+-------+  
+
+Q9) Insert the following records into Member table:
+ Ans: INSERT INTO Member
+    -> (1, 'Richa Sharma', 'Pune', '2006-12-01', 'Lifetime', 25000, 5, 50),
+    -> (2, 'Garima Sen', 'pune', CURDATE(), 'Annual', 1000, 3, NULL);
+	
+	 table member;
++-----------+--------------+----------------+---------------+-----------------+-----------+-------------------+----------------+
+| Member_Id | Member_Name  | Member_Address | Acc_Open_Date | Membership_Type | Fees_paid | Max_Books_Allowed | Penalty_Amount |
++-----------+--------------+----------------+---------------+-----------------+-----------+-------------------+----------------+
+|         1 | Richa Sharma | Pune           | 2006-12-01    | Lifetime        |  25000.00 |                 5 |          50.00 |
+|         2 | Garima Sen   | pune           | 2026-10-04    | Annual          |   1000.00 |                 3 |           NULL |
++-----------+--------------+----------------+---------------+-----------------+-----------+-------------------+----------------+
+
+Q10) Insert at least 5 more records with suitable data into Member table.
+ Ans: INSERT INTO Member
+    -> VALUES
+    -> (3, 'Divya Zade', 'Nagpur', '2025-01-15', 'Annual', 15000, 5, 100),
+    -> (4, 'Sejal Burele', 'Pune', '2025-03-20', 'Quarterly', 8000, 3, 50),
+    -> (5, 'Vedant Dhote', 'Mumbai', '2025-05-10', 'Half Yearly', 12000, 4, 200),
+    -> (6, 'Priya Deshmukh', 'Nashik', '2025-07-25', 'Lifetime', 25000, 10, NULL),
+    -> (7, 'Neha Kulkarni', 'Wardha', '2025-09-05', 'Annual', 15000, 5, 75);
+		
+		table member;
++-----------+----------------+----------------+---------------+-----------------+-----------+-------------------+----------------+
+| Member_Id | Member_Name    | Member_Address | Acc_Open_Date | Membership_Type | Fees_paid | Max_Books_Allowed | Penalty_Amount |
++-----------+----------------+----------------+---------------+-----------------+-----------+-------------------+----------------+
+|         1 | Richa Sharma   | Pune           | 2006-12-01    | Lifetime        |  25000.00 |                 5 |          50.00 |
+|         2 | Garima Sen     | pune           | 2026-10-04    | Annual          |   1000.00 |                 3 |           NULL |
+|         3 | Divya Zade     | Nagpur         | 2025-01-15    | Annual          |  15000.00 |                 5 |         100.00 |
+|         4 | Sejal Burele   | Pune           | 2025-03-20    | Quarterly       |   8000.00 |                 3 |          50.00 |
+|         5 | Vedant Dhote   | Mumbai         | 2025-05-10    | Half Yearly     |  12000.00 |                 4 |         200.00 |
+|         6 | Priya Deshmukh | Nashik         | 2025-07-25    | Lifetime        |  25000.00 |                10 |           NULL |
+|         7 | Neha Kulkarni  | Wardha         | 2025-09-05    | Annual          |  15000.00 |                 5 |          75.00 |
++-----------+----------------+----------------+---------------+-----------------+-----------+-------------------+----------------+  
+Q11) Try to decrease Member_Name size from 40 to 20.If it fails, mention the reason.  
+ Ans: ALTER TABLE Member
+    -> MODIFY Member_Name VARCHAR(20);
+	 INSERT INTO Member
+    -> VALUES
+    -> (8, 'Bhagyashree Chepurwar', 'Pune', CURDATE(), 'Annual', 15000, 100, NULL);
+ERROR 1406 (22001): Data too long for column 'Member_Name' at row 1
+
+Q12) Add a CHECK constraint:Max_Books_Allowed must be less than 100.
+Ans:  alter table member
+    -> add check (max_Books_Allowed < 100);
+ INSERT INTO Member
+    -> VALUES
+    -> (8, 'Bhagyashree', 'Pune', CURDATE(), 'Annual', 15000, 100, NULL);
+ERROR 3819 (HY000): Check constraint 'member_chk_2' is violated.
+
+Q13) Create a backup table named MemberBackup using the Member table.
+Ans:    CREATE TABLE MemberBackup AS
+	SELECT * FROM Member;
+	
+	 table  memberBackup;
++-----------+----------------+----------------+---------------+-----------------+-----------+-------------------+----------------+
+| Member_Id | Member_Name    | Member_Address | Acc_Open_Date | Membership_Type | Fees_paid | Max_Books_Allowed | Penalty_Amount |
++-----------+----------------+----------------+---------------+-----------------+-----------+-------------------+----------------+
+|         1 | Richa Sharma   | Pune           | 2006-12-01    | Lifetime        |  25000.00 |                 5 |          50.00 |
+|         2 | Garima Sen     | pune           | 2026-10-04    | Annual          |   1000.00 |                 3 |           NULL |
+|         3 | Divya Zade     | Nagpur         | 2025-01-15    | Annual          |  15000.00 |                 5 |         100.00 |
+|         4 | Sejal Burele   | Pune           | 2025-03-20    | Quarterly       |   8000.00 |                 3 |          50.00 |
+|         5 | Vedant Dhote   | Mumbai         | 2025-05-10    | Half Yearly     |  12000.00 |                 4 |         200.00 |
+|         6 | Priya Deshmukh | Nashik         | 2025-07-25    | Lifetime        |  25000.00 |                10 |           NULL |
+|         7 | Neha Kulkarni  | Wardha         | 2025-09-05    | Annual          |  15000.00 |                 5 |          75.00 |
++-----------+----------------+----------------+---------------+-----------------+-----------+-------------------+----------------+          
+
+Q14) Add named constraints:
+- Max_Books_Allowed < 100
+- Penalty_Amount <= 1000
+Ans: alter table member
+    -> add check (max_Books_Allowed < 100),
+    -> add check (penalty_Amount <=100);
+
+Q15) Drop the Books table.
+Ans: drop table book;
+
+Q16) Create Books table again with constraints:
+Ans: CREATE TABLE Books
+    -> (
+    ->     Book_No INT PRIMARY KEY,
+    ->     Book_Name VARCHAR(30) NOT NULL,
+    ->     Author_Name VARCHAR(30),
+    ->     Cost DECIMAL(10,2),
+    ->     Category VARCHAR(15)
+    ->         CHECK (
+    ->             Category = 'System'
+    ->             OR Category = 'Fiction'
+    ->             OR Category = 'Database'
+    ->             OR Category = 'RDBMS'
+    ->             OR Category = 'Others'
+    ->             OR Category = 'Science'
+    ->         )
+    -> );
+
+	 desc books;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| Book_No     | int           | NO   | PRI | NULL    |       |
+| Book_Name   | varchar(30)   | NO   |     | NULL    |       |
+| Author_Name | varchar(30)   | YES  |     | NULL    |       |
+| Cost        | decimal(10,2) | YES  |     | NULL    |       |
+| Category    | varchar(15)   | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+   
+
+Q17) Insert the following data into Books table:
+Ans: INSERT INTO Books
+    -> VALUES
+    -> (101, 'Let Us C', 'Denis Ritchie', 450, 'System'),
+    -> (102, 'Oracle Complete Ref', 'Loni', 550, 'Database'),
+    -> (103, 'Mastering SQL', 'Loni', 250, 'Database'),
+    -> (104, 'PL SQL Ref', 'Scott Urman', 750, 'Database'),
+    -> (105, 'National Geographic', 'Adis Scott', 1000, 'Science');
+	
+	 table books;
++---------+---------------------+---------------+---------+----------+
+| Book_No | Book_Name           | Author_Name   | Cost    | Category |
++---------+---------------------+---------------+---------+----------+
+|     101 | Let Us C            | Denis Ritchie |  450.00 | System   |
+|     102 | Oracle Complete Ref | Loni          |  550.00 | Database |
+|     103 | Mastering SQL       | Loni          |  250.00 | Database |
+|     104 | PL SQL Ref          | Scott Urman   |  750.00 | Database |
+|     105 | National Geographic | Adis Scott    | 1000.00 | Science  |
++---------+---------------------+---------------+---------+----------+    
+
+Q18) Insert at least 5 more records into Books table.
+Ans:INSERT INTO Books
+VALUES
+(106, 'Java Programming', 'James Gosling', 550.00, 'System'),
+(107, 'The Alchemist', 'Paulo Coelho', 400.00, 'Fiction'),
+(108, 'Database Systems', 'Raghu Ramakrishnan', 650.00, 'Database'),
+(109, 'SQL Fundamentals', 'John Smith', 450.00, 'RDBMS'),
+(110, 'Science World', 'Robert Brown', 350.00, 'Science');
+
+ table books;
++---------+---------------------+--------------------+---------+----------+
+| Book_No | Book_Name           | Author_Name        | Cost    | Category |
++---------+---------------------+--------------------+---------+----------+
+|     101 | Let Us C            | Denis Ritchie      |  450.00 | System   |
+|     102 | Oracle Complete Ref | Loni               |  550.00 | Database |
+|     103 | Mastering SQL       | Loni               |  250.00 | Database |
+|     104 | PL SQL Ref          | Scott Urman        |  750.00 | Database |
+|     105 | National Geographic | Adis Scott         | 1000.00 | Science  |
+|     106 | Java Programming    | James Gosling      |  550.00 | System   |
+|     107 | The Alchemist       | Paulo Coelho       |  400.00 | Fiction  |
+|     108 | Database Systems    | Raghu Ramakrishnan |  650.00 | Database |
+|     109 | SQL Fundamentals    | John Smith         |  450.00 | RDBMS    |
+|     110 | Science World       | Robert Brown       |  350.00 | Science  |
++---------+---------------------+--------------------+---------+----------+    
+
+Q19) View all data from Member and Books tables using SELECT.
+Ans: select * from member;
++-----------+----------------+----------------+---------------+-----------------+-----------+-------------------+----------------+
+| Member_Id | Member_Name    | Member_Address | Acc_Open_Date | Membership_Type | Fees_paid | Max_Books_Allowed | Penalty_Amount |
++-----------+----------------+----------------+---------------+-----------------+-----------+-------------------+----------------+
+|         1 | Richa Sharma   | Pune           | 2006-12-01    | Lifetime        |  25000.00 |                 5 |          50.00 |
+|         2 | Garima Sen     | pune           | 2026-10-04    | Annual          |   1000.00 |                 3 |           NULL |
+|         3 | Divya Zade     | Nagpur         | 2025-01-15    | Annual          |  15000.00 |                 5 |         100.00 |
+|         4 | Sejal Burele   | Pune           | 2025-03-20    | Quarterly       |   8000.00 |                 3 |          50.00 |
+|         5 | Vedant Dhote   | Mumbai         | 2025-05-10    | Half Yearly     |  12000.00 |                 4 |         200.00 |
+|         6 | Priya Deshmukh | Nashik         | 2025-07-25    | Lifetime        |  25000.00 |                10 |           NULL |
+|         7 | Neha Kulkarni  | Wardha         | 2025-09-05    | Annual          |  15000.00 |                 5 |          75.00 |
++-----------+----------------+----------------+---------------+-----------------+-----------+-------------------+----------------+  
+2.select * from books;
+ +---------+---------------------+--------------------+---------+----------+
+| Book_No | Book_Name           | Author_Name        | Cost    | Category |
++---------+---------------------+--------------------+---------+----------+
+|     101 | Let Us C            | Denis Ritchie      |  450.00 | System   |
+|     102 | Oracle Complete Ref | Loni               |  550.00 | Database |
+|     103 | Mastering SQL       | Loni               |  250.00 | Database |
+|     104 | PL SQL Ref          | Scott Urman        |  750.00 | Database |
+|     105 | National Geographic | Adis Scott         | 1000.00 | Science  |
+|     106 | Java Programming    | James Gosling      |  550.00 | System   |
+|     107 | The Alchemist       | Paulo Coelho       |  400.00 | Fiction  |
+|     108 | Database Systems    | Raghu Ramakrishnan |  650.00 | Database |
+|     109 | SQL Fundamentals    | John Smith         |  450.00 | RDBMS    |
+|     110 | Science World       | Robert Brown       |  350.00 | Science  |
++---------+---------------------+--------------------+---------+----------+
+
+Q20) Drop Lib_Issue table.
+Ans: drop table Lib_Issue;
+
+Q21) Create Issue table again with constraints:
+Ans: CREATE TABLE Issue
+(
+    Lib_Issue_Id INT PRIMARY KEY,
+    Book_No INT,
+    Member_Id INT,
+    Issue_Date DATE,
+    Return_Date DATE,
+    FOREIGN KEY (Book_No)
+        REFERENCES Books(Book_No),
+    FOREIGN KEY (Member_Id)
+        REFERENCES Member(Member_Id)
+);
+	desc issue;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| Lib_Issue_Id | int  | NO   | PRI | NULL    |       |
+| Book_No      | int  | YES  | MUL | NULL    |       |
+| Member_Id    | int  | YES  | MUL | NULL    |       |
+| Issue_Date   | date | YES  |     | NULL    |       |
+| Return_Date  | date | YES  |     | NULL    |       |
++--------------+------+------+-----+---------+-------+
+
+Q22) Insert the following records into Issue table:
+Ans: insert into issue
+    -> values(7001,101,1,'2024-12-10'),
+    -> (7002,102,2,'2024-12-25'),
+    -> (7003,104,1,'2025-01-15'),
+    -> (7004,101,1,'2025-02-04'),
+    -> (7005,104,2,'2025-03-15'),
+    -> (7006,101,3,'2025-04-18');
+	
+	 table issue;
++--------------+---------+-----------+------------+
+| Lib_Issue_Id | Book_No | Member_Id | Issue_Date |
++--------------+---------+-----------+------------+
+|         7001 |     101 |         1 | 2024-12-10 |
+|         7002 |     102 |         2 | 2024-12-25 |
+|         7003 |     104 |         1 | 2025-01-15 |
+|         7004 |     101 |         1 | 2025-02-04 |
+|         7005 |     104 |         2 | 2025-03-15 |
+|         7006 |     101 |         3 | 2025-04-18 |
++--------------+---------+-----------+------------+     
+
+Q23) Try inserting an Issue record with Member_Id not existing in Member table.
+Observe and write the error.	
+Ans: INSERT INTO issue
+    -> VALUES (7007, 999, 1, '2025-03-10');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`information`.`issue`, CONSTRAINT `issue_ibfk_1` FOREIGN KEY (`Book_No`) REFERENCES `books` (`Book_No`))
+
+Q24) Try deleting Member_Id = 1 from Member table.
+Observe and write the foreign key error.
+Ans: delete from member
+    -> where member_id = 1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`information`.`issue`, CONSTRAINT `issue_ibfk_2` FOREIGN KEY (`Member_Id`) REFERENCES `member` (`Member_Id`))
+
+Q25) Update Return_Date for Issue_Id 7004 and 7005 to 15 days after Issue_Date.
+Ans: ALTER TABLE issue
+    -> ADD Return_Date DATE;
+
+ desc issue;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| Lib_Issue_Id | int  | NO   | PRI | NULL    |       |
+| Book_No      | int  | YES  | MUL | NULL    |       |
+| Member_Id    | int  | YES  | MUL | NULL    |       |
+| Issue_Date   | date | YES  |     | NULL    |       |
+| Return_Date  | date | YES  |     | NULL    |       |
++--------------+------+------+-----+---------+-------+          
+UPDATE issue
+    -> SET Return_Date = DATE_ADD(Issue_Date, INTERVAL 15 DAY)
+    -> WHERE Lib_Issue_Id IN (7004, 7005);
+table issue;
++--------------+---------+-----------+------------+-------------+
+| Lib_Issue_Id | Book_No | Member_Id | Issue_Date | Return_Date |
++--------------+---------+-----------+------------+-------------+
+|         7001 |     101 |         1 | 2024-12-10 | NULL        |
+|         7002 |     102 |         2 | 2024-12-25 | NULL        |
+|         7003 |     104 |         1 | 2025-01-15 | NULL        |
+|         7004 |     101 |         1 | 2025-02-04 | 2025-02-19  |
+|         7005 |     104 |         2 | 2025-03-15 | 2025-03-30  |
+|         7006 |     101 |         3 | 2025-04-18 | NULL        |
++--------------+---------+-----------+------------+-------------+
+
+Q26) Delete all Issue records where Member_Id = 1 and Issue_Date is before '2006-12-10'.
+Ans:  delete from issue
+    -> where member_id = 1
+    -> and issue_date < '2006-12-10';
+ table issue;
++--------------+---------+-----------+------------+-------------+
+| Lib_Issue_Id | Book_No | Member_Id | Issue_Date | Return_Date |
++--------------+---------+-----------+------------+-------------+
+|         7001 |     101 |         1 | 2024-12-10 | NULL        |
+|         7002 |     102 |         2 | 2024-12-25 | NULL        |
+|         7003 |     104 |         1 | 2025-01-15 | NULL        |
+|         7004 |     101 |         1 | 2025-02-04 | 2025-02-19  |
+|         7005 |     104 |         2 | 2025-03-15 | 2025-03-30  |
+|         7006 |     101 |         3 | 2025-04-18 | NULL        |
++--------------+---------+-----------+------------+-------------+     
+
+Q27) Delete all Books where Category is not Database or RDBMS.
+Ans: delete from books
+    -> where category not in ('database' , 'RDBMS');
+
+ SELECT *
+    -> FROM books
+    -> WHERE Category NOT IN ('Database', 'RDBMS');
++---------+---------------------+---------------+---------+----------+
+| Book_No | Book_Name           | Author_Name   | Cost    | Category |
++---------+---------------------+---------------+---------+----------+
+|     101 | Let Us C            | Denis Ritchie |  450.00 | System   |
+|     105 | National Geographic | Adis Scott    | 1000.00 | Science  |
+|     106 | Java Programming    | James Gosling |  550.00 | System   |
+|     107 | The Alchemist       | Paulo Coelho  |  400.00 | Fiction  |
+|     110 | Science World       | Robert Brown  |  350.00 | Science  |
++---------+---------------------+---------------+---------+----------+           
+
+Q28) Drop all three tables: Issue, Member, Books.
+Ans: DROP TABLE issue;
+     DROP TABLE member;
+     DROP TABLE books;
+

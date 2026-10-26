@@ -1,0 +1,175 @@
+              joins query
+
+
+1)cross join
+   
+ select name, dept_name from employee cross join department;
++-------------+--------------+
+| name        | dept_name    |
++-------------+--------------+
+| Divya       | Finance      |
+| Divya       | Sala_Manager |
+| Divya       | HR           |
+| Divya       | IT           |
+| Sejal       | Finance      |
+| Sejal       | Sala_Manager |
+| Sejal       | HR           |
+| Sejal       | IT           |
+| Pratu       | Finance      |
+| Pratu       | Sala_Manager |
+| Pratu       | HR           |
+| Pratu       | IT           |
+| Bhagyashree | Finance      |
+| Bhagyashree | Sala_Manager |
+| Bhagyashree | HR           |
+| Bhagyashree | IT           |
+| Yogita      | Finance      |
+| Yogita      | Sala_Manager |
+| Yogita      | HR           |
+| Yogita      | IT           |
+| Vedant      | Finance      |
+| Vedant      | Sala_Manager |
+| Vedant      | HR           |
+| Vedant      | IT           |
+| Janvi       | Finance      |
+| Janvi       | Sala_Manager |
+| Janvi       | HR           |
+| Janvi       | IT           |
++-------------+--------------+           
+
+2) inner join
+
+ select name, dept_name from employee inner join department
+    -> on employee.dept_id = department.dept_id;
++-------------+--------------+
+| name        | dept_name    |
++-------------+--------------+
+| Divya       | IT           |
+| Pratu       | IT           |
+| Vedant      | IT           |
+| Sejal       | HR           |
+| Bhagyashree | HR           |
+| Yogita      | Sala_Manager |
+| Janvi       | Finance      |
++-------------+--------------+   
+ 
+ select e.name , d.dept_id
+    -> from employee as e inner join department as d
+    -> on e.dept_id = d.dept_id;
++-------------+---------+
+| name        | dept_id |
++-------------+---------+
+| Divya       |       1 |
+| Pratu       |       1 |
+| Vedant      |       1 |
+| Sejal       |       2 |
+| Bhagyashree |       2 |
+| Yogita      |       3 |
+| Janvi       |       4 |
++-------------+---------+      
+
+select e.name , d.dept_name
+    -> from employee as e inner join department as d
+    -> on e.dept_id = d.dept_id;
++-------------+--------------+
+| name        | dept_name    |
++-------------+--------------+
+| Divya       | IT           |
+| Pratu       | IT           |
+| Vedant      | IT           |
+| Sejal       | HR           |
+| Bhagyashree | HR           |
+| Yogita      | Sala_Manager |
+| Janvi       | Finance      |
++-------------+--------------+           
+
+select d.dept_name , count(e.id)
+    -> from employee as e inner join department as d
+    -> on e.dept_id = d.dept_id
+    -> group by d.dept_name;
++--------------+-------------+
+| dept_name    | count(e.id) |
++--------------+-------------+
+| IT           |           3 |
+| HR           |           2 |
+| Sala_Manager |           1 |
+| Finance      |           1 |
++--------------+-------------+           
+
+select e.name , d.dept_name
+    -> from employee as e inner join department d
+    -> on e.dept_id = d.dept_id
+    -> where e.city = d.dept_loc;
+Empty set (0.00 sec)
+
+select dept_name , year(doj), count(id)
+    -> from employee as  e inner join department as d
+    -> on e.dept_id = d.dept_id
+    -> group by dept_name, year(doj);
++--------------+-----------+-----------+
+| dept_name    | year(doj) | count(id) |
++--------------+-----------+-----------+
+| IT           |      2026 |         3 |
+| HR           |      2026 |         2 |
+| Sala_Manager |      2026 |         1 |
+| Finance      |      2026 |         1 |
++--------------+-----------+-----------+    
+
+3) Left join 
+
+ select name , dept_name
+    -> from employee as e left join department as d
+    -> on e.dept_id = d.dept_id;
++-------------+--------------+
+| name        | dept_name    |
++-------------+--------------+
+| Divya       | IT           |
+| Sejal       | HR           |
+| Pratu       | IT           |
+| Bhagyashree | HR           |
+| Yogita      | Sala_Manager |
+| Vedant      | IT           |
+| Janvi       | Finance      |
++-------------+--------------+     
+
+4) Right join
+
+select name, dept_name
+    -> from employee as e right join department d
++-------------+--------------+
+| name        | dept_name    |
++-------------+--------------+
+| Divya       | IT           |
+| Pratu       | IT           |
+| Vedant      | IT           |
+| Sejal       | HR           |
+| Bhagyashree | HR           |
+| Yogita      | Sala_Manager |
+| Janvi       | Finance      |
+| NULL        | Marketing    |
++-------------+--------------+
+5)full outer join
+
+select name, dept_name
+    -> from employee as e right join department d
+    -> on e.dept_id = d.dept_id
+    -> union
+    -> select name, dept_name
+    -> from employee as e right join department d
+    -> on e.dept_id = d.dept_id;
++-------------+--------------+
+| name        | dept_name    |
++-------------+--------------+
+| Divya       | IT           |
+| Pratu       | IT           |
+| Vedant      | IT           |
+| Sejal       | HR           |
+| Bhagyashree | HR           |
+| Yogita      | Sala_Manager |
+| Janvi       | Finance      |
+| NULL        | Marketing    |
++-------------+--------------+             
+
+
+
+

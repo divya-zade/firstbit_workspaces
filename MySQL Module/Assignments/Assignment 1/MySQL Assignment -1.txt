@@ -1,0 +1,76 @@
+                                MySQL Assignment - 1
+
+Q1)Display Databases
+Ans: Show databases;
++--------------------+
+| Database           |
++--------------------+
+| information        |
+| information_schema |
+| june_2026          |
+| june_batch_2026    |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+
+Q2) Create countries Table
+Ans: create table countries
+    (country_id int ,country_name varchar(30), region_id int);
+
+	desc countries;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| country_id   | int         | YES  |     | NULL    |       |
+| country_name | varchar(30) | YES  |     | NULL    |       |
+| region_id    | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+
+Q3) Create jobs Table with Constraints
+Ans: create table job
+    (job_id int primary key, job_title varchar(30) not null,
+     min_salary decimal(7,2),max_salary decimal(7,2) check(max_salary <=25000) );
+
+	desc job;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| job_id     | int          | NO   | PRI | NULL    |       |
+| job_title  | varchar(30)  | NO   |     | NULL    |       |
+| min_salary | decimal(7,2) | YES  |     | NULL    |       |
+| max_salary | decimal(7,2) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+
+
+Q4) Create job_history Table
+Ans: create table job_history
+    -> (employee_id int , start_date date, end_date date,
+	 job_id int , department_id int);
+	
+	desc job_history;
++---------------+------+------+-----+---------+-------+
+| Field         | Type | Null | Key | Default | Extra |
++---------------+------+------+-----+---------+-------+
+| employee_id   | int  | YES  |     | NULL    |       |
+| start_date    | date | YES  |     | NULL    |       |
+| end_date      | date | YES  |     | NULL    |       |
+| job_id        | int  | YES  |     | NULL    |       |
+| department_id | int  | YES  |     | NULL    |       |
++---------------+------+------+-----+---------+-------+
+	
+
+Q5) Add UNIQUE Constraint
+Ans: alter table countries
+     add constraint country_id unique(country_id);
+
+	 desc countries;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| country_id   | int         | YES  | UNI | NULL    |       |
+| country_name | varchar(30) | YES  |     | NULL    |       |
+| region_id    | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+

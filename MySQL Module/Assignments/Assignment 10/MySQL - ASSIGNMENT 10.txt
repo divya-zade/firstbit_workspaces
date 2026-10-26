@@ -1,0 +1,99 @@
+                                   MySQL - ASSIGNMENT 10
+
+Q1) Q1) Write a stored function Annual_Salary that takes salary as input
+and returns yearly salary (salary * 12).
+Ans:  delimiter #
+mysql>  create function Annual_salary1(salary decimal(10,2))
+    -> returns decimal(10,2)
+    -> deterministic
+    -> begin
+    -> return salary *12;
+    -> end#
+mysql> delimiter ;
+ select account_no, customer_name, balance, annual_salary(balance) as yearly_salary
+    -> from bank_account;
++------------+---------------+----------+---------------+
+| account_no | customer_name | balance  | yearly_salary |
++------------+---------------+----------+---------------+
+|        101 | Divya         | 50000.00 |     600000.00 |
+|        102 | Sejal         | 80000.00 |     960000.00 |
+|        103 | Pratu         | 35000.00 |     420000.00 |
+|        104 | Bhagyashree   | 90000.00 |    1080000.00 |
+|        105 | Yogita        | 20000.00 |     240000.00 |
++------------+---------------+----------+---------------+    
+                   
+
+Q2) Write a stored function Calculate_Bonus that takes salary as input
+and returns bonus amount:
+- If salary >= 80000 → bonus = 20%
+- If salary between 50000 and 79999 → bonus = 10%
+- Otherwise → bonus = 5%
+Ans: mysql> delimiter #
+mysql> create function calculate_bonus(salary decimal(10,2))
+    -> returns decimal(10,2)
+    -> deterministic
+    -> begin
+    -> if salary >=80000 then
+    -> return salary *0.2;
+    -> elseif salary >=50000 then
+    -> return salary * 0.1;
+    -> else
+    -> return salary * 0.05;
+    -> end if;
+    -> end #
+mysql> delimiter ;
+mysql> select account_no, customer_name, balance,
+    -> calculate_bonus(balance) as "Bouns"
+    -> from bank_account;
++------------+---------------+----------+----------+
+| account_no | customer_name | balance  | Bouns    |
++------------+---------------+----------+----------+
+|        101 | Divya         | 50000.00 |  5000.00 |
+|        102 | Sejal         | 80000.00 | 16000.00 |
+|        103 | Pratu         | 35000.00 |  1750.00 |
+|        104 | Bhagyashree   | 90000.00 | 18000.00 |
+|        105 | Yogita        | 20000.00 |  1000.00 |
++------------+---------------+----------+----------+   
+
+Q3) Write a stored function Salary_Grade that takes salary as input
+and returns grade:
+- 'A' if salary >= 80000
+- 'B' if salary between 50000 and 79999
+- 'C' if salary < 50000
+
+Ans: mysql> delimiter #
+ create function salary_grade1(salary decimal(10,2))
+    ->      returns char(1)
+    ->      deterministic
+    ->      begin
+    ->      if salary >= 80000 then
+    ->      return 'A';
+    ->      elseif salary between 50000 and 79999 then
+    ->      return 'B';
+    ->      else
+    ->      return 'c';
+    ->      end if;
+    ->      end#
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql>  select account_no,customer_name,balance,
+    ->  salary_grade1(balance) as "Grades salary"
+    -> from bank_account;
++------------+---------------+----------+---------------+
+| account_no | customer_name | balance  | Grades salary |
++------------+---------------+----------+---------------+
+|        101 | Divya         | 50000.00 | B             |
+|        102 | Sejal         | 80000.00 | A             |
+|        103 | Pratu         | 35000.00 | c             |
+|        104 | Bhagyashree   | 90000.00 | A             |
+|        105 | Yogita        | 20000.00 | c             |
++------------+---------------+----------+---------------+                    
+
+Q4) Write a stored function Employee_Exists that takes emp_id as input
+and returns 1 if employee exists, otherwise 0.
+Ans:
+
+
+  
+

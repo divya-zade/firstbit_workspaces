@@ -1,0 +1,91 @@
+                             MySQL - ASSIGNMENT 10
+
+Q1) Write a stored function Annual_Salary that takes salary as input
+and returns yearly salary (salary * 12).
+Ans: delimiter #
+CREATE FUNCTION Annual_Salary3(p_salary DECIMAL(10,2))
+    -> RETURNS DECIMAL(12,2)
+    -> DETERMINISTIC
+    -> BEGIN
+    ->     RETURN p_salary * 12;
+    -> end #
+deliniter ;
+mysql>  select emp_id,emp_name,salary,
+    -> Annual_salary3(salary) as "yearly_salary"
+    -> from employee;
++--------+-------------+----------+---------------+
+| emp_id | emp_name    | salary   | yearly_salary |
++--------+-------------+----------+---------------+
+|    101 | Divya       | 80000.00 |     960000.00 |
+|    102 | Sejal       | 60000.00 |     720000.00 |
+|    103 | Pratu       | 40000.00 |     480000.00 |
+|    104 | Bhagyashree | 90000.00 |    1080000.00 |
+|    105 | Yogita      | 30000.00 |     360000.00 |
++--------+-------------+----------+---------------+              
+
+
+Q2) Write a stored function Calculate_Bonus that takes salary as input
+and returns bonus amount:
+- If salary >= 80000 → bonus = 20%
+- If salary between 50000 and 79999 → bonus = 10%
+- Otherwise → bonus = 5%
+
+Ans: delimiter #
+CREATE FUNCTION Calculate_Bonus(p_salary DECIMAL(10,2))
+    -> RETURNS DECIMAL(10,2)
+    -> DETERMINISTIC
+    -> BEGIN
+    ->     IF p_salary >= 80000 THEN
+    ->         RETURN p_salary * 0.20;
+    ->     ELSEIF p_salary >= 50000 THEN
+    ->         RETURN p_salary * 0.10;
+    ->     ELSE
+    ->         RETURN p_salary * 0.05;
+    ->     END IF;
+    -> end #
+mysql> delimiter ;
+mysql> select emp_id,emp_name,salary,
+    -> Calculate_Bonus(salary) as "Bouns on salary"
+    ->  from employee;
++--------+-------------+----------+-----------------+
+| emp_id | emp_name    | salary   | Bouns on salary |
++--------+-------------+----------+-----------------+
+|    101 | Divya       | 80000.00 |        16000.00 |
+|    102 | Sejal       | 60000.00 |         6000.00 |
+|    103 | Pratu       | 40000.00 |         2000.00 |
+|    104 | Bhagyashree | 90000.00 |        18000.00 |
+|    105 | Yogita      | 30000.00 |         1500.00 |
++--------+-------------+----------+-----------------+     
+
+Q3) Write a stored function Salary_Grade that takes salary as input
+and returns grade:
+- 'A' if salary >= 80000
+- 'B' if salary between 50000 and 79999
+- 'C' if salary < 50000
+
+Ans: delimiter #
+CREATE FUNCTION Salary_Grade(p_salary DECIMAL(10,2))
+    -> RETURNS CHAR(1)
+    -> DETERMINISTIC
+    -> BEGIN
+    ->     IF p_salary >= 80000 THEN
+    ->         RETURN 'A';
+    ->     ELSEIF p_salary >= 50000 THEN
+    ->         RETURN 'B';
+    ->     ELSE
+    ->         RETURN 'C';
+    ->     END IF;
+    -> END #
+delimiter ;
+ select emp_id,emp_name,salary,
+    -> Salary_Grade(SALARY) as "Garde for salary"
+    ->  from employee;
++--------+-------------+----------+------------------+
+| emp_id | emp_name    | salary   | Garde for salary |
++--------+-------------+----------+------------------+
+|    101 | Divya       | 80000.00 | A                |
+|    102 | Sejal       | 60000.00 | B                |
+|    103 | Pratu       | 40000.00 | C                |
+|    104 | Bhagyashree | 90000.00 | A                |
+|    105 | Yogita      | 30000.00 | C                |
++--------+-------------+----------+------------------+

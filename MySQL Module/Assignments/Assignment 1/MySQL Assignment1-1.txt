@@ -1,0 +1,115 @@
+Q6) Create jobs_default Table with DEFAULT Values
+Ans:  create table job_default
+    (job_id int , job_title varchar(30) default "" , min_salary decimal(7,2) default 8000,        	max_salary decimal(7,2) default null );
+
+	desc job_default;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| job_id     | int          | YES  |     | NULL    |       |
+| job_title  | varchar(30)  | YES  |     |         |       |
+| min_salary | decimal(7,2) | YES  |     | 8000.00 |       |
+| max_salary | decimal(7,2) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+                                                                                 
+
+Q7) Create departments Table (Composite Primary Key)
+Ans:  create table department
+     (department_id decimal(4,0) not null,
+     department_name varchar(30) not null,manager_id decimal(6,0) not null, location_id      decimal(4,0),primary key (department_id,manager_id) );
+
+	 desc department;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| department_id   | decimal(4,0) | NO   | PRI | NULL    |       |
+| department_name | varchar(30)  | NO   |     | NULL    |       |
+| manager_id      | decimal(6,0) | NO   | PRI | NULL    |       |
+| location_id     | decimal(4,0) | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+                                   
+
+Q8) Create employees Table with Normal Foreign Key
+Ans: alter table department
+     modify column department_id int ;
+
+	 desc department;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| department_id   | int          | NO   | PRI | NULL    |       |
+| department_name | varchar(30)  | NO   |     | NULL    |       |
+| manager_id      | decimal(6,0) | NO   | PRI | NULL    |       |
+| location_id     | decimal(4,0) | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+	
+	
+	create table employees
+   	 (employee_id int primary key,
+     	first_name varchar(50),last_name varchar(50), email varchar(100),phone_no 	varchar(20),
+       hire_date date, job_id int, saalary decimal(10,2), commission 	decimal(10,2),manager_id 	int, department_id int,
+	 foreign key (department_id)
+	references department(department_id) );
+	
+	desc employees;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| employee_id   | int           | NO   | PRI | NULL    |       |
+| first_name    | varchar(50)   | YES  |     | NULL    |       |
+| last_name     | varchar(50)   | YES  |     | NULL    |       |
+| email         | varchar(100)  | YES  |     | NULL    |       |
+| phone_no      | varchar(20)   | YES  |     | NULL    |       |
+| hire_date     | date          | YES  |     | NULL    |       |
+| job_id        | int           | YES  |     | NULL    |       |
+| saalary       | decimal(10,2) | YES  |     | NULL    |       |
+| commission    | decimal(10,2) | YES  |     | NULL    |       |
+| manager_id    | int           | YES  |     | NULL    |       |
+| department_id | int           | YES  | MUL | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+
+Q9) Composite Foreign Key Implementation
+Ans:  create table department_managers
+    -> (department_id decimal(4,0) ,
+    -> manager_id decimal(6,0),
+    -> manager_name varchar(50) not null,
+    -> primary key (department_id, manager_id) );
+	
+	desc department_managers;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| department_id | decimal(4,0) | NO   | PRI | NULL    |       |
+| manager_id    | decimal(6,0) | NO   | PRI | NULL    |       |
+| manager_name  | varchar(50)  | NO   |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+   alter table department_managers
+    -> modify department_id int,
+    -> modify manager_id int;
+	desc department_managers;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| department_id | int         | NO   | PRI | NULL    |       |
+| manager_id    | int         | NO   | PRI | NULL    |       |
+| manager_name  | varchar(50) | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+alter table employees
+    -> add constraint foreign key(department_id, manager_id)
+    -> references department_managers(department_id, manager_id);
+        desc employees;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| employee_id   | int           | NO   | PRI | NULL    |       |
+| first_name    | varchar(50)   | YES  |     | NULL    |       |
+| last_name     | varchar(50)   | YES  |     | NULL    |       |
+| email         | varchar(100)  | YES  |     | NULL    |       |
+| phone_no      | varchar(20)   | YES  |     | NULL    |       |
+| hire_date     | date          | YES  |     | NULL    |       |
+| job_id        | int           | YES  |     | NULL    |       |
+| saalary       | decimal(10,2) | YES  |     | NULL    |       |
+| commission    | decimal(10,2) | YES  |     | NULL    |       |
+| manager_id    | int           | YES  |     | NULL    |       |
+| department_id | int           | YES  | MUL | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+
+
+ 

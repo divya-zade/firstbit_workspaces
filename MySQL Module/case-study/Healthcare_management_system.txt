@@ -1,0 +1,84 @@
+Case-Study Database Design for Healthcare Records
+
+1) CREATE DATABASE Healthcare_Records;
+2) USE Healthcare_Records;
+
+************* Crate table patients ****************
+3) 
+CREATE TABLE Patients (
+    patient_id INT PRIMARY KEY AUTO_INCREMENT,
+
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    date_of_birth DATE NOT NULL,
+
+    gender VARCHAR(20) NOT NULL,
+
+CONSTRAINT chk_gender CHECK (
+    gender IN ('Male', 'Female', 'Other')
+),
+
+    phone VARCHAR(15) UNIQUE,
+    CONSTRAINT chk_phone CHECK (
+        phone IS NULL OR
+        phone REGEXP '^([6-9][0-9]{9}|\\+91[6-9][0-9]{9})$'
+    ),
+
+    email VARCHAR(100) UNIQUE,
+
+    address VARCHAR(250),
+
+    insurance_provider VARCHAR(100),
+    insurance_policy_no VARCHAR(50),
+
+    CONSTRAINT chk_insurance_details CHECK (
+        (insurance_provider IS NULL
+         AND insurance_policy_no IS NULL)
+        OR
+        (insurance_provider IS NOT NULL
+         AND insurance_policy_no IS NOT NULL)
+    ),
+
+    height DECIMAL(5,2),
+    CONSTRAINT chk_height CHECK (
+        height IS NULL OR
+        (height > 0 AND height <= 300)
+    ),
+
+    weight DECIMAL(5,2),
+    CONSTRAINT chk_weight CHECK (
+        weight IS NULL OR
+        (weight > 0 AND weight <= 500)
+    ),
+
+    blood_group VARCHAR(3),
+    CONSTRAINT chk_blood_group CHECK (
+        blood_group IS NULL OR
+        blood_group IN (
+            'A+', 'A-', 'B+', 'B-',
+            'AB+', 'AB-', 'O+', 'O-'
+        )
+    )
+);
+
+4) desc patients;
++---------------------+--------------+------+-----+---------+----------------+
+| Field               | Type         | Null | Key | Default | Extra          |
++---------------------+--------------+------+-----+---------+----------------+
+| patient_id          | int          | NO   | PRI | NULL    | auto_increment |
+| first_name          | varchar(50)  | NO   |     | NULL    |                |
+| last_name           | varchar(50)  | NO   |     | NULL    |                |
+| date_of_birth       | date         | NO   |     | NULL    |                |
+| gender              | varchar(20)  | NO   |     | NULL    |                |
+| phone               | varchar(15)  | YES  | UNI | NULL    |                |
+| email               | varchar(100) | YES  | UNI | NULL    |                |
+| address             | varchar(250) | YES  |     | NULL    |                |
+| insurance_provider  | varchar(100) | YES  |     | NULL    |                |
+| insurance_policy_no | varchar(50)  | YES  |     | NULL    |                |
+| height              | decimal(5,2) | YES  |     | NULL    |                |
+| weight              | decimal(5,2) | YES  |     | NULL    |                |
+| blood_group         | varchar(3)   | YES  |     | NULL    |                |
++---------------------+--------------+------+-----+---------+----------------+            
+
+
+
